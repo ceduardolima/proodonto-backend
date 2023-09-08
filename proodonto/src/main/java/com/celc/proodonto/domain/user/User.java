@@ -1,34 +1,46 @@
 package com.celc.proodonto.domain.user;
 
 import com.celc.proodonto.domain.address.Address;
-import com.celc.proodonto.domain.address.AddressDTO;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import org.springframework.data.annotation.Id;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@Table(name = "users")
+@Entity(name = "User")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String email;
     private String cpf;
-    private UserType userType;
-    private SkinColor skinColor;
     private String issuingAgency;
-    private Date birthday;
+    private String birthday;
     private String phoneNumber;
     @Embedded
     private Address address;
     private String nationality;
     private String placeOfBirth;
+
+    @Enumerated(EnumType.STRING)
+    private SkinColor skinColor;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
+    @Enumerated(EnumType.STRING)
     private MaritalStatus maritalStatus;
     public User(@Valid UserDTO data) {
         this.name = data.name();
+        this.email = data.email();
         this.cpf = data.cpf();
         this.skinColor = data.skinColor();
         this.issuingAgency = data.issuingAgency();
