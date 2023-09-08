@@ -10,6 +10,7 @@ public record UserDTO(
         String name,
         @NotBlank
         String cpf,
+        UserType userType,
         SkinColor skinColor,
         String issuingAgency,
         Date birthday,
