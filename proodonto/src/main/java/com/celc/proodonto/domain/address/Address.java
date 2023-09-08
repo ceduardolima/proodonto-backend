@@ -13,12 +13,14 @@ public class Address {
     private String street;
     private String neighborhood;
     private String state;
+    private String city;
     private String CEP;
 
     public Address(AddressDTO addressDTO) {
         this.street = addressDTO.street();
-        this.neighborhood = this.getNeighborhood();
-        this.state = this.getState();
-        this.CEP = this.getCEP();
+        this.neighborhood = addressDTO.neighborhood();
+        this.state = addressDTO.state();
+        this.city = addressDTO.city();
+        this.CEP = addressDTO.CEP();
     }
 }
