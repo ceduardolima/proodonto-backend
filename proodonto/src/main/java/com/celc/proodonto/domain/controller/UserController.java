@@ -31,4 +31,10 @@ public class UserController {
         var userPage = userRepository.findAll(page).map(UserListDTO::new);
         return ResponseEntity.ok(userPage);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detail(@PathVariable Long id) {
+        var user = userRepository.getReferenceById(id);
+        return ResponseEntity.ok(new UserDetailDTO(user));
+    }
 }
