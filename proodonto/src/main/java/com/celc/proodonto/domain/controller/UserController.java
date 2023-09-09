@@ -1,11 +1,10 @@
 package com.celc.proodonto.domain.controller;
 
-import com.celc.proodonto.domain.user.User;
-import com.celc.proodonto.domain.user.UserDTO;
-import com.celc.proodonto.domain.user.UserDetailDTO;
-import com.celc.proodonto.domain.user.UserRepository;
+import com.celc.proodonto.domain.user.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -25,5 +24,11 @@ public class UserController {
         userRepository.save(user);
         var uri = uriComponentsBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).body(new UserDetailDTO(user));
+    }
+
+    @GetMapping
+    public ResponseEntity list(@PageableDefault(size = 10, sort = {"name"}) Pageable page)  {
+        var userPage = userRepository.findAll(page).map(UserListDTO::new);
+        return ResponseEntity.ok(userPage);
     }
 }
