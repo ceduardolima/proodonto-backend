@@ -37,4 +37,12 @@ public class UserController {
         var user = userRepository.getReferenceById(id);
         return ResponseEntity.ok(new UserDetailDTO(user));
     }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity delete(@PathVariable Long id) {
+        var user = userRepository.getReferenceById(id);
+        userRepository.delete(user);
+        return ResponseEntity.noContent().build();
+    }
 }
