@@ -45,4 +45,12 @@ public class UserController {
         userRepository.delete(user);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity update(@RequestBody UserUpdateDTO userUpdateDTO) {
+        var user = userRepository.getReferenceById(userUpdateDTO.id());
+        user.update(userUpdateDTO);
+        return ResponseEntity.ok(new UserDetailDTO(user));
+    }
 }

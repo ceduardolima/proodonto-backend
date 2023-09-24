@@ -23,4 +23,17 @@ public class Address {
         this.city = addressDTO.city();
         this.CEP = addressDTO.CEP();
     }
+
+    public void update(AddressDTO addressDTO) {
+        if (addressDTO.street() != null)
+            street = addressDTO.street();
+        if (addressDTO.neighborhood() != null)
+            neighborhood = addressDTO.neighborhood();
+        if (addressDTO.state() != null)
+            state = addressDTO.state();
+        if (addressDTO.city() != null)
+            city = addressDTO.city();
+        if (addressDTO.CEP() != null)
+            CEP = addressDTO.CEP();
+    }
 }

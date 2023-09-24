@@ -52,4 +52,15 @@ public class User {
         this.placeOfBirth = data.placeOfBirth();
         this.maritalStatus = data.maritalStatus();
     }
+
+    public void update(UserUpdateDTO userUpdateDTO) {
+        if (userUpdateDTO.name() != null)
+            name = userUpdateDTO.name();
+        if (userUpdateDTO.phoneNumber() != null)
+            phoneNumber = userUpdateDTO.phoneNumber();
+        if (userUpdateDTO.address() != null)
+            address.update(userUpdateDTO.address());
+        if (userUpdateDTO.maritalStatus() != null)
+            maritalStatus = userUpdateDTO.maritalStatus();
+    }
 }
