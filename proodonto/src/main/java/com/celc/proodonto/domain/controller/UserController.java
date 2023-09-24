@@ -48,7 +48,7 @@ public class UserController {
 
     @PutMapping
     @Transactional
-    public ResponseEntity update(@RequestBody UserUpdateData userUpdateData) {
+    public ResponseEntity update(@RequestBody @Valid UserUpdateData userUpdateData) {
         var user = userRepository.getReferenceById(userUpdateData.id());
         user.update(userUpdateData);
         return ResponseEntity.ok(new UserDetailData(user));
