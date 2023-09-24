@@ -19,23 +19,23 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity register(@RequestBody @Valid UserDTO data, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity register(@RequestBody @Valid UserData data, UriComponentsBuilder uriComponentsBuilder) {
         var user = new User(data);
         userRepository.save(user);
         var uri = uriComponentsBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).body(new UserDetailDTO(user));
+        return ResponseEntity.created(uri).body(new UserDetailData(user));
     }
 
     @GetMapping
     public ResponseEntity list(@PageableDefault(size = 10, sort = {"name"}) Pageable page)  {
-        var userPage = userRepository.findAll(page).map(UserListDTO::new);
+        var userPage = userRepository.findAll(page).map(UserListData::new);
         return ResponseEntity.ok(userPage);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity detail(@PathVariable Long id) {
         var user = userRepository.getReferenceById(id);
-        return ResponseEntity.ok(new UserDetailDTO(user));
+        return ResponseEntity.ok(new UserDetailData(user));
     }
 
     @DeleteMapping("/{id}")
@@ -48,9 +48,9 @@ public class UserController {
 
     @PutMapping
     @Transactional
-    public ResponseEntity update(@RequestBody UserUpdateDTO userUpdateDTO) {
-        var user = userRepository.getReferenceById(userUpdateDTO.id());
-        user.update(userUpdateDTO);
-        return ResponseEntity.ok(new UserDetailDTO(user));
+    public ResponseEntity update(@RequestBody UserUpdateData userUpdateData) {
+        var user = userRepository.getReferenceById(userUpdateData.id());
+        user.update(userUpdateData);
+        return ResponseEntity.ok(new UserDetailData(user));
     }
 }

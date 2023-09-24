@@ -8,8 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Table(name = "users")
 @Entity(name = "User")
 @Getter
@@ -38,7 +36,7 @@ public class User {
     private UserType userType;
     @Enumerated(EnumType.STRING)
     private MaritalStatus maritalStatus;
-    public User(@Valid UserDTO data) {
+    public User(@Valid UserData data) {
         this.name = data.name();
         this.email = data.email();
         this.cpf = data.cpf();
@@ -53,14 +51,14 @@ public class User {
         this.maritalStatus = data.maritalStatus();
     }
 
-    public void update(UserUpdateDTO userUpdateDTO) {
-        if (userUpdateDTO.name() != null)
-            name = userUpdateDTO.name();
-        if (userUpdateDTO.phoneNumber() != null)
-            phoneNumber = userUpdateDTO.phoneNumber();
-        if (userUpdateDTO.address() != null)
-            address.update(userUpdateDTO.address());
-        if (userUpdateDTO.maritalStatus() != null)
-            maritalStatus = userUpdateDTO.maritalStatus();
+    public void update(UserUpdateData userUpdateData) {
+        if (userUpdateData.name() != null)
+            name = userUpdateData.name();
+        if (userUpdateData.phoneNumber() != null)
+            phoneNumber = userUpdateData.phoneNumber();
+        if (userUpdateData.address() != null)
+            address.update(userUpdateData.address());
+        if (userUpdateData.maritalStatus() != null)
+            maritalStatus = userUpdateData.maritalStatus();
     }
 }

@@ -3,7 +3,7 @@ package com.celc.proodonto.domain.user;
 import com.celc.proodonto.domain.address.AddressDTO;
 import jakarta.validation.constraints.NotNull;
 
-public record UserUpdateDTO(
+public record UserUpdateData(
         @NotNull
         Long id,
         String name,

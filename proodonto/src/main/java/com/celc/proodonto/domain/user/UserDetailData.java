@@ -2,7 +2,7 @@ package com.celc.proodonto.domain.user;
 
 import com.celc.proodonto.domain.address.AddressDTO;
 
-public record UserDetailDTO(
+public record UserDetailData(
         Long id,
         String name,
         String email,
@@ -18,7 +18,7 @@ public record UserDetailDTO(
         MaritalStatus maritalStatus
 
 ) {
-    public UserDetailDTO(User user) {
+    public UserDetailData(User user) {
         this(
                 user.getId(),
                 user.getName(),
