@@ -18,6 +18,7 @@ public class Record {
     private String recordNumber;
     private Long operatorId;
     private Long advisorId;
+    private Long patientId;
     private String semester;
     private String careUnit;
     private String initialExam;
