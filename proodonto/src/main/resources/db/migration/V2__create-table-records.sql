@@ -1,6 +1,6 @@
 create table records(
 
-    id bigint not null,
+    id binary(16) not null,
     record_number varchar(5) not null,
     advisor_id bigint not null,
     operator_id bigint not null,
