@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("records")
 public class RecordController {
@@ -32,5 +34,12 @@ public class RecordController {
     public ResponseEntity<Page<RecordListData>> list(@PageableDefault(sort = {"recordNumber"}) Pageable page) {
         var resultPage = repository.findAll(page);
         return ResponseEntity.ok(resultPage.map(RecordListData::new));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RecordDetailData> detail(@PathVariable String id) {
+        UUID uuid = UUID.fromString(id);
+        Record recordData = repository.getReferenceById(uuid);
+        return ResponseEntity.ok(new RecordDetailData(recordData));
     }
 }
