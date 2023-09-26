@@ -1,17 +1,15 @@
 package com.celc.proodonto.domain.controller;
 
+import com.celc.proodonto.domain.records.*;
 import com.celc.proodonto.domain.records.Record;
-import com.celc.proodonto.domain.records.RecordDetailData;
-import com.celc.proodonto.domain.records.RecordRegisterData;
-import com.celc.proodonto.domain.records.RecordRepository;
 import com.celc.proodonto.domain.user.UserDetailData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
@@ -28,5 +26,11 @@ public class RecordController {
         repository.save(record);
         var uri = uriComponentsBuilder.path("/records/{id}").buildAndExpand(record.getId()).toUri();
         return ResponseEntity.created(uri).body(new RecordDetailData(record));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<RecordListData>> list(@PageableDefault(sort = {"recordNumber"}) Pageable page) {
+        var resultPage = repository.findAll(page);
+        return ResponseEntity.ok(resultPage.map(RecordListData::new));
     }
 }
