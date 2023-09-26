@@ -26,6 +26,7 @@ public class Record {
     private int semester;
     private String careUnit;
     private String initialExam;
+    private boolean active;
 
     public Record(RecordRegisterData recordRegisterData) {
         recordNumber = recordRegisterData.recordNumber();
@@ -35,5 +36,10 @@ public class Record {
         semester = recordRegisterData.semester();
         careUnit = recordRegisterData.careUnit();
         initialExam = recordRegisterData.initialExam();
+        active = true;
+    }
+
+    public void delete() {
+        active = false;
     }
 }

@@ -32,7 +32,7 @@ public class RecordController {
 
     @GetMapping
     public ResponseEntity<Page<RecordListData>> list(@PageableDefault(sort = {"recordNumber"}) Pageable page) {
-        var resultPage = repository.findAll(page);
+        var resultPage = repository.findAllByActiveTrue(page);
         return ResponseEntity.ok(resultPage.map(RecordListData::new));
     }
 
@@ -41,5 +41,22 @@ public class RecordController {
         UUID uuid = UUID.fromString(id);
         Record recordData = repository.getReferenceById(uuid);
         return ResponseEntity.ok(new RecordDetailData(recordData));
+    }
+
+    @DeleteMapping("id/{id}")
+    @Transactional
+    public ResponseEntity deleteById(@PathVariable String id) {
+        UUID uuid = UUID.fromString(id);
+        Record record = repository.getReferenceById(uuid);
+        record.delete();
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("recordNumber/{recordNumber}")
+    @Transactional
+    public ResponseEntity deleteByRecordNumber(@PathVariable String recordNumber) {
+        Record record = repository.findRecordByRecordNumber(recordNumber);
+        record.delete();
+        return ResponseEntity.noContent().build();
     }
 }
