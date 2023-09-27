@@ -38,6 +38,12 @@ public class RecordController {
         return ResponseEntity.ok(resultPage.map(RecordListData::new));
     }
 
+    @GetMapping("/deleted")
+    public ResponseEntity<Page<RecordListData>> listDeleted(@PageableDefault(sort = {"recordNumber"}) Pageable page) {
+        var resultPage = repository.findAllByActiveFalse(page);
+        return ResponseEntity.ok(resultPage.map(RecordListData::new));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<RecordDetailData> detail(@PathVariable String id) {
         UUID uuid = UUID.fromString(id);
