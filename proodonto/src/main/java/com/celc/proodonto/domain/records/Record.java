@@ -39,6 +39,19 @@ public class Record {
         active = true;
     }
 
+    public void update(RecordUpdateData recordUpdateData) {
+        if (recordUpdateData.advisorId() != null)
+            advisorId = recordUpdateData.advisorId();
+        if (recordUpdateData.careUnit() != null)
+            careUnit = recordUpdateData.careUnit();
+        if (recordUpdateData.operatorId() != null)
+            operatorId = recordUpdateData.operatorId();
+        if (recordUpdateData.initialExam() != null)
+            initialExam = recordUpdateData.initialExam();
+        if (recordUpdateData.semester() != null)
+            semester = recordUpdateData.semester();
+    }
+
     public void delete() {
         active = false;
     }

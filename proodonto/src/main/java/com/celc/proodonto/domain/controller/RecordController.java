@@ -61,4 +61,17 @@ public class RecordController {
         }
         return ResponseEntity.badRequest().build();
     }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity update(@RequestBody RecordUpdateData recordUpdateData) {
+        Record record;
+        if (recordUpdateData.id() == null)
+            record = repository.findRecordByRecordNumber(recordUpdateData.recordNumber());
+        else if (recordUpdateData.recordNumber() != null)
+            record = repository.getReferenceById(recordUpdateData.id());
+        else return ResponseEntity.badRequest().build();
+        record.update(recordUpdateData);
+        return ResponseEntity.ok(new RecordDetailData(record));
+    }
 }
