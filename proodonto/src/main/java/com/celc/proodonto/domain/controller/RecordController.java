@@ -1,8 +1,10 @@
 package com.celc.proodonto.domain.controller;
 
+import com.celc.proodonto.domain.controller.parameters.DeleteRecordParams;
 import com.celc.proodonto.domain.records.*;
 import com.celc.proodonto.domain.records.Record;
 import com.celc.proodonto.domain.user.UserDetailData;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,20 +45,20 @@ public class RecordController {
         return ResponseEntity.ok(new RecordDetailData(recordData));
     }
 
-    @DeleteMapping("id/{id}")
+    @DeleteMapping()
     @Transactional
-    public ResponseEntity deleteById(@PathVariable String id) {
-        UUID uuid = UUID.fromString(id);
-        Record record = repository.getReferenceById(uuid);
-        record.delete();
-        return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("recordNumber/{recordNumber}")
-    @Transactional
-    public ResponseEntity deleteByRecordNumber(@PathVariable String recordNumber) {
-        Record record = repository.findRecordByRecordNumber(recordNumber);
-        record.delete();
-        return ResponseEntity.noContent().build();
+    public ResponseEntity delete(@Valid DeleteRecordParams params){
+        if (params.getId() == null) {
+            if (!params.getRecordNumber().isBlank()) {
+                Record record = repository.findRecordByRecordNumber(params.getRecordNumber());
+                record.delete();
+                return ResponseEntity.noContent().build();
+            }
+        } else {
+            Record record = repository.getReferenceById(params.getId());
+            record.delete();
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 }
